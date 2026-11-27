@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson game</title>
+<link id="fontlink" rel="stylesheet" href="">
+<style>
+
+*{box-sizing:border-box}
+body{margin:0;font-family:'Baloo Bhaijaan 2',system-ui,sans-serif;background:linear-gradient(180deg,#fef3c7,#d1fae5);min-height:100vh;color:#1f2937;font-size:18px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:10px 10px 40px}
+header{background:linear-gradient(135deg,#047857,#0f766e);color:#fff;border-radius:22px;padding:12px 14px;box-shadow:0 6px 0 #064e3b}
+h1{margin:0;font-size:25px;line-height:1.25}
+.hud{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pill{background:#fff;color:#1f2937;border-radius:999px;padding:1px 12px;font-weight:800;font-size:17px}
+.pill.shake{animation:shake .5s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 2px;scrollbar-width:none}
+nav button{flex:0 0 auto;border:0;border-radius:14px;padding:6px 12px;font:inherit;font-weight:800;font-size:16px;background:#fff;color:#065f46;box-shadow:0 3px 0 #6ee7b7;cursor:pointer}
+nav button.on{background:#facc15;box-shadow:0 3px 0 #ca8a04}
+section{display:none;background:#fff;border-radius:22px;padding:14px;box-shadow:0 6px 18px rgba(6,78,59,.12)}
+section.on{display:block}
+h2{margin:0 0 6px;font-size:24px;color:#065f46}
+h3{margin:14px 0 6px;font-size:20px;color:#b45309}
+.mascot{display:flex;gap:10px;align-items:flex-start;margin:6px 0 10px}
+.mascot svg{flex:0 0 74px;width:74px;height:74px}
+.bubble{background:#ecfdf5;border:3px solid #6ee7b7;border-radius:18px;padding:8px 12px;position:relative}
+.bubble:before{content:"";position:absolute;right:-12px;top:20px;border:9px solid transparent;border-left-color:#6ee7b7;border-right-width:0}
+.card{background:#fffbeb;border:3px dashed #fcd34d;border-radius:18px;padding:10px;margin:10px 0}
+.card b.t{color:#b45309}
+.grid3{display:grid;grid-template-columns:1fr;gap:8px}
+.mini{background:#f0fdf4;border-radius:14px;padding:8px 10px;border-right:6px solid #10b981}
+.mini.o{background:#fff7ed;border-color:#f97316}.mini.b{background:#eff6ff;border-color:#3b82f6}.mini.p{background:#faf5ff;border-color:#8b5cf6}
+.road{position:relative;height:56px;margin:6px 0}
+.road svg{width:100%;height:56px}
+.tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:8px;margin:8px 0}
+.tl button{border:3px solid #a7f3d0;background:#fff;border-radius:16px;padding:6px 4px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;line-height:1.25;min-height:64px}
+.tl button small{display:block;color:#b45309;font-size:17px}
+.tl button.seen{background:#d1fae5;border-color:#10b981}
+.tl button.on{background:#fde68a;border-color:#f59e0b}
+.tcard{background:#f0fdfa;border:3px solid #5eead4;border-radius:18px;padding:10px;min-height:90px}
+.tcard .row2{margin:3px 0}
+.prog{font-weight:800;color:#b45309}
+.big{border:0;border-radius:16px;padding:8px 16px;font:inherit;font-weight:800;font-size:18px;cursor:pointer;color:#fff;background:#0d9488;box-shadow:0 4px 0 #115e59;min-height:48px}
+.big:active{transform:translateY(3px);box-shadow:0 1px 0 #115e59}
+.big.g{background:#16a34a;box-shadow:0 4px 0 #166534}.big.o{background:#f59e0b;box-shadow:0 4px 0 #b45309}.big.gr{background:#94a3b8;box-shadow:0 4px 0 #64748b}
+.big:disabled{opacity:.5}
+.lv{display:flex;gap:6px;margin:6px 0}
+.lv button{flex:1;border:3px solid #fde68a;background:#fff;border-radius:14px;font:inherit;font-weight:800;padding:4px;cursor:pointer;min-height:44px}
+.lv button.on{background:#fde68a;border-color:#f59e0b}
+.qbox{background:#f0fdf4;border-radius:18px;padding:10px;margin-top:6px}
+.qtext{font-size:20px;font-weight:700;margin-bottom:6px}
+.opts{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0}
+.opts button{border:3px solid #bbf7d0;background:#fff;border-radius:14px;font:inherit;font-weight:700;font-size:18px;padding:6px 10px;cursor:pointer;min-height:52px;text-align:right}
+.opts button.sel{background:#fef9c3;border-color:#eab308}
+.opts button.right{background:#bbf7d0;border-color:#16a34a}
+.opts button.wrong{background:#fecaca;border-color:#dc2626;opacity:.7}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fb{min-height:28px;margin-top:8px;font-weight:700}
+.fb.good{color:#15803d}.fb.bad{color:#b91c1c}.fb.hint{color:#7c3aed}
+.stk{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px}
+.st{text-align:center;font-size:15px;font-weight:700;line-height:1.25}
+.disc{width:84px;height:84px;margin:0 auto 4px;border-radius:50%;border:5px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden}
+.disc:after{content:"";position:absolute;top:-30%;left:-60%;width:50%;height:160%;background:rgba(255,255,255,.55);transform:rotate(25deg);animation:shine 3s infinite}
+@keyframes shine{0%{left:-60%}40%,100%{left:140%}}
+.st.locked .disc{filter:grayscale(1);opacity:.45}.st.locked .disc:after{display:none}
+.lock{position:absolute;font-size:24px;bottom:2px;left:6px;z-index:2}
+.st small{display:block;font-weight:500;color:#64748b;font-size:13px}
+.ov{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.ov.on{display:flex}
+.pop{background:#fff;border-radius:24px;padding:18px;text-align:center;max-width:330px;width:100%;animation:popin .35s}
+@keyframes popin{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.pop .disc{width:110px;height:110px;font-size:54px}
+.pop .disc.fly{animation:fly 1.6s forwards .3s}
+@keyframes fly{to{transform:translate(-160px,-260px) rotate(-360deg) scale(.3);opacity:0}}
+.conf{position:fixed;top:-20px;width:12px;height:16px;z-index:60;animation:fall linear forwards;border-radius:3px}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+[dir=ltr] .bubble:before{right:auto;left:-12px;border-left-color:transparent;border-right-color:#6ee7b7;border-right-width:9px;border-left-width:0}
+[dir=ltr] .opts button{text-align:left}
+[dir=ltr] .lock{left:auto;right:6px}
+[dir=ltr] @keyframes fly{to{transform:translate(160px,-260px) rotate(360deg) scale(.3);opacity:0}}
+
+body{font-family:var(--font,'Baloo 2'),system-ui,sans-serif}
+.big.cf.on{background:#f59e0b;box-shadow:0 4px 0 #b45309}
+.why{margin-top:10px;background:#faf5ff;border:3px solid #c4b5fd;border-radius:16px;padding:8px 10px;color:#1f2937;font-weight:600}
+.why .wq{font-weight:800;color:#6d28d9}.why .opts button{font-size:16px;min-height:44px}.why .wfb{font-weight:600}
+.play{border:0;border-radius:999px;background:#7c3aed;color:#fff;font:inherit;font-weight:800;padding:6px 14px;cursor:pointer;box-shadow:0 3px 0 #4c1d95;min-height:44px}
+.play.on{background:#db2777;box-shadow:0 3px 0 #831843}
+.lab{border:3px solid #c7d2fe;border-radius:20px;padding:10px;margin:12px 0;background:#f8fafc}
+.lab h3{margin-top:0}.lab .done{color:#15803d;font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chips button{border:3px solid #cbd5e1;background:#fff;border-radius:14px;padding:6px 10px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;min-height:44px}
+.chips button.sel{border-color:#f59e0b;background:#fef3c7}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bin{border:3px dashed #94a3b8;border-radius:16px;padding:8px;min-height:90px;cursor:pointer;background:#fff}
+.bin h4{margin:0 0 4px;text-align:center}.bin .it{font-size:14px;background:#f1f5f9;border-radius:10px;padding:3px 6px;margin:3px 0}
+.shk{animation:shake .5s}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1 id="hTitle"></h1><div class="hud"><span class="pill" id="hHearts"></span><span class="pill" id="hStreak"></span><span class="pill" id="hStk"></span></div></header>
+<nav id="nav"></nav>
+<div id="secs"></div>
+</div>
+<div class="ov" id="ov"><div class="pop" id="pop"></div></div>
