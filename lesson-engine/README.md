@@ -39,7 +39,7 @@ English lesson (taught in English at school) → `ui:'en'`, all texts in English
 | 6-9 | warm, very simple | cartoon mascot (OWL) | toys, colours | many colours, stickers | recall |
 | 10-12 | encouraging big sibling | adventure / journey | home, school | stickers + medals | recall + apply |
 | 13+ | smart friend, no baby talk | mission / lab / detective | cooking, phones, cars, fireworks | dark "lab" theme, ranks as sticker names | why/how, predict, exam G.R. |
-Narration (tts.py): female voice (Laomedeia), in the language the subject is taught in (English school subject → English script). NEVER put style instructions in the TTS text: the model reads them aloud or improvises. tts.py sends the script only and checks every clip by transcribing it back (must match >= 85%). If 3.8 TTS hits its quota: `TTS_MODEL=gemini-2.5-flash-preview-tts`.
+Narration (tts.py): free Microsoft Edge neural voice via `pip install edge-tts`, no API key and no verification pass (Osama's choice). Arabic lessons: `ar-EG-SalmaNeural` (default, Egyptian female); English lessons: pass `en-US-AvaNeural`. Needs `speech.platform.bing.com` allowed in the environment network; run with `SSL_CERT_FILE=/root/.ccr/ca-bundle.crt` behind the session proxy. NEVER put style instructions in the TTS text.
 
 ### New tools (labs.js, all optional)
 - `why(mkResult, [q, ans, [wrongs], explanation])`: after a correct answer the child must answer "why?" (no heart lost). Use it on core concepts.
