@@ -52,3 +52,6 @@ Narration (tts.py): female voice (Laomedeia), in the language the subject is tau
 - `LESSON.labs=['map','poe',...]`: the Explorer sticker is earned when all these labs are done (`labDone(name)`).
 - Mnemonic + analogy in every branch (e.g. "Police Catch Gas Leaks" = Precipitate, Colour, Gas, Light).
 Do not name a lesson constant `CH` (engine2 uses it). See `lesson_ahmed_chem.js` as the full example.
+
+### Celebrations + combo (fx.js, automatic for every lesson)
+Correct answer: "+1" and a small spark burst at the tap. Combo milestones (3, 5, 10, 15, 20, 30...): a toast "🔥 COMBO x5 · On fire!", bursts at 5, fireworks from 10. The 🔥 streak pill glows hotter at 3/5/10. A wrong answer after a combo of 3+ shows "💨 Combo lost" and the pill fizzles. Fireworks also for the crown, the collector and the explorer stickers. Arabic or English texts follow `U.lang`; everything respects prefers-reduced-motion.

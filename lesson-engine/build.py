@@ -10,8 +10,8 @@ au={}
 if len(sys.argv)>3:
     for f in sorted(os.listdir(sys.argv[3])):
         if f.endswith('.mp3'):au[f[:-4]]='data:audio/mpeg;base64,'+base64.b64encode(open(os.path.join(sys.argv[3],f),'rb').read()).decode()
-# order: ui, core, labs, AUDIO, LESSON data, engine, engine2
-js='\n'.join([rd('ui.js'),rd('core.js'),rd('labs.js'),'const AUDIO='+json.dumps(au)+';',lesson,rd('engine.js'),rd('engine2.js')])
+# order: ui, core, labs, AUDIO, LESSON data, engine, engine2, fx (celebrations + combo)
+js='\n'.join([rd('ui.js'),rd('core.js'),rd('labs.js'),'const AUDIO='+json.dumps(au)+';',lesson,rd('engine.js'),rd('engine2.js'),rd('fx.js')])
 import re
 m=re.search(r"title:'(?:\S+\s)?((?:[^'\\]|\\.)*)'",lesson)
 shell=rd('shell.html').replace('<title>Lesson game</title>','<title>'+(m.group(1).replace("\\'","'").split(':')[0].strip() if m else 'Lesson game')+'</title>')
