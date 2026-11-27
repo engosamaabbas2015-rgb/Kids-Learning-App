@@ -30,7 +30,7 @@ Goal: the lesson sticks and is understood deeply. No spaced review and no voice 
 Workflow now: write `lesson_X.js` + `script.json` (narration) -> `python3 -I tts.py script.json audio/` -> `python3 -I build.py lesson_X.js out.html audio/` -> `python3 -I test.py out.html shots/`.
 
 ### Language rule (fixed, Osama's decision)
-The lesson language decides EVERYTHING: Arabic lesson → `ui:'ar_f'/'ar_m'`, all texts in Arabic, narration script in **Egyptian Arabic**.
+The lesson language decides EVERYTHING: Arabic lesson → `ui:'ar_f'/'ar_m'`, all texts in Arabic, narration script in **Modern Standard Arabic** (Edge voice; Egyptian only with Gemini).
 English lesson (taught in English at school) → `ui:'en'`, all texts in English, narration script in **English**. Never mix (no Egyptian narration for an English lesson).
 
 ### Match the child's age (always decide this first)
@@ -39,7 +39,7 @@ English lesson (taught in English at school) → `ui:'en'`, all texts in English
 | 6-9 | warm, very simple | cartoon mascot (OWL) | toys, colours | many colours, stickers | recall |
 | 10-12 | encouraging big sibling | adventure / journey | home, school | stickers + medals | recall + apply |
 | 13+ | smart friend, no baby talk | mission / lab / detective | cooking, phones, cars, fireworks | dark "lab" theme, ranks as sticker names | why/how, predict, exam G.R. |
-Narration (tts.py): Gemini TTS by default (the only engine that pronounces Egyptian dialect correctly), female voice Laomedeia, one request per clip, NO verification pass (Osama's choice), GAP seconds between clips (default 25) and a 65 s back-off on 429 because the free quota is per minute. `TTS_ENGINE=edge` = free Microsoft voice (ar-EG-SalmaNeural / en-US-AvaNeural), instant and keyless but it reads Egyptian text with a Modern Standard accent: use it only for English or MSA scripts. NEVER put style instructions in the TTS text.
+Narration (tts.py): Osama's current choice for Arabic lessons = Modern Standard Arabic script + free Microsoft Edge voice `ar-SA-ZariyahNeural` (`TTS_ENGINE=edge`, run with `SSL_CERT_FILE=/root/.ccr/ca-bundle.crt`; needs speech.platform.bing.com allowed). Edge reads Egyptian dialect with a wrong accent, so never feed it Egyptian text. English lessons: `en-US-AvaNeural`. Gemini (default engine, voice Laomedeia) is the only one that speaks real Egyptian, but its free quota is tiny: one request per clip, GAP between clips, no verification pass. Egyptian scripts are kept as `script_X_eg.json` for that. NEVER put style instructions in the TTS text.
 
 ### New tools (labs.js, all optional)
 - `why(mkResult, [q, ans, [wrongs], explanation])`: after a correct answer the child must answer "why?" (no heart lost). Use it on core concepts.
